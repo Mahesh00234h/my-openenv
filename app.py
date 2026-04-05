@@ -12,7 +12,7 @@ def root():
     return {"name": "email-triage-env", "status": "running", "endpoints": ["/reset", "/step", "/state", "/docs"]}
 
 
-@app.get("/reset")
+@app.api_route("/reset", methods=["GET", "POST"])
 def reset(task_id: str = Query(default="easy_triage")) -> Response:
     try:
         obs = env.reset(task_id)
