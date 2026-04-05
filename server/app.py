@@ -41,3 +41,12 @@ def step(action: Action) -> Response:
 def state() -> Response:
     import json
     return Response(content=json.dumps(env.state()), media_type="application/json")
+
+
+def main():
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+
+if __name__ == "__main__":
+    main()
