@@ -7,6 +7,11 @@ app = FastAPI(title="Email Triage Environment")
 env = EmailTriageEnv()
 
 
+@app.get("/")
+def root():
+    return {"name": "email-triage-env", "status": "running", "endpoints": ["/reset", "/step", "/state", "/docs"]}
+
+
 @app.get("/reset")
 def reset(task_id: str = Query(default="easy_triage")) -> Response:
     try:
