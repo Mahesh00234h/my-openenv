@@ -1,0 +1,135 @@
+{
+  "task_id": "medium_triage",
+  "emails": [
+    {
+      "email_id": "m001",
+      "subject": "Issue with my recent order",
+      "body": "Hi, I placed an order last week (order #48291) and it still hasn't shipped. The tracking page just says 'processing'. I've been waiting 7 days now and I need this item for an event this weekend. Can you please look into this and expedite if possible? This is getting frustrating.",
+      "sender": "customer.sarah@gmail.com",
+      "timestamp": "2024-01-16T10:15:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "high",
+        "required_response_keywords": ["order", "shipping", "expedite"],
+        "near_miss_categories": ["urgent"]
+      }
+    },
+    {
+      "email_id": "m002",
+      "subject": "CRITICAL: Payment processing service returning 503 errors",
+      "body": "All payment transactions have been failing for the last 8 minutes. The payment gateway is returning HTTP 503. Revenue impact is approximately $12,000/minute. I've already paged the payments team but we need executive sign-off to trigger the backup processor. Please respond immediately.",
+      "sender": "payments-oncall@company.com",
+      "timestamp": "2024-01-16T14:22:00Z",
+      "ground_truth": {
+        "category": "urgent",
+        "priority": "urgent",
+        "required_response_keywords": ["approve", "backup", "payment"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "m003",
+      "subject": "Your monthly product newsletter — January 2024",
+      "body": "Happy New Year from the ProductCo team! This month we're excited to share our latest feature releases, upcoming webinars, and a special discount for loyal customers. Read on for highlights from our engineering blog, customer success stories, and a sneak peek at what's coming in Q2. As always, you can unsubscribe at any time.",
+      "sender": "updates@productco.com",
+      "timestamp": "2024-01-16T08:00:00Z",
+      "ground_truth": {
+        "category": "newsletter",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["spam"]
+      }
+    },
+    {
+      "email_id": "m004",
+      "subject": "Re: Deployment schedule for v2.4 release",
+      "body": "Hey team, following up on yesterday's discussion — I've confirmed the deployment window with DevOps: Saturday 02:00–04:00 UTC. All engineers on the release train should be available on the incident bridge. Please acknowledge receipt and flag any conflicts by EOD Friday. Also, the rollback plan doc has been updated in Confluence.",
+      "sender": "bob.devlead@company.com",
+      "timestamp": "2024-01-16T09:30:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "high",
+        "required_response_keywords": ["acknowledge", "deployment"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "m005",
+      "subject": "Exclusive deal just for you — 70% off premium plan!",
+      "body": "Congratulations! You've been specially selected to receive an exclusive 70% discount on our premium subscription. This offer expires in 24 hours. Click the link below to claim your discount. No credit card required to start — just enter your email and we'll handle the rest. Don't miss out on this once-in-a-lifetime opportunity!",
+      "sender": "deals@super-offers-daily.biz",
+      "timestamp": "2024-01-16T07:45:00Z",
+      "ground_truth": {
+        "category": "spam",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["newsletter"]
+      }
+    },
+    {
+      "email_id": "m006",
+      "subject": "Login problem",
+      "body": "I can't log in. Please fix.",
+      "sender": "user.mark@example.com",
+      "timestamp": "2024-01-16T11:00:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "medium",
+        "required_response_keywords": ["login", "account", "help"],
+        "near_miss_categories": ["internal"]
+      }
+    },
+    {
+      "email_id": "m007",
+      "subject": "Security vulnerability report — please review",
+      "body": "Hi, I'm a security researcher and I've discovered a SQL injection vulnerability in your public API endpoint /api/v1/search. I was able to extract table names from your database using a blind injection technique. I have not disclosed this publicly and am following responsible disclosure. I'd like to coordinate a fix timeline. Please treat this as confidential and respond within 48 hours.",
+      "sender": "researcher@bugbounty.io",
+      "timestamp": "2024-01-16T13:05:00Z",
+      "ground_truth": {
+        "category": "urgent",
+        "priority": "urgent",
+        "required_response_keywords": ["security", "vulnerability", "fix", "confidential"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "m008",
+      "subject": "Team lunch this Friday",
+      "body": "Hey everyone! We're organizing a team lunch this Friday at noon at The Green Fork restaurant (5 min walk from the office). It's a chance to celebrate the successful Q4 launch and welcome our two new team members. RSVP by Thursday so we can confirm the reservation. Partners and plus-ones are welcome!",
+      "sender": "carol.hr@company.com",
+      "timestamp": "2024-01-16T09:00:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "m009",
+      "subject": "API integration question",
+      "body": "Hello support, I'm a developer integrating your REST API into our enterprise platform. I've been working on this for three weeks and we're blocked on a critical milestone — our go-live is in 48 hours. I'm getting a 401 error on the /oauth/token endpoint even though my credentials are correct. I've attached the request/response logs. This is blocking our entire engineering team. Please escalate to a senior engineer.",
+      "sender": "dev.team@enterprise-client.com",
+      "timestamp": "2024-01-16T15:30:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "high",
+        "required_response_keywords": ["oauth", "token", "credentials", "escalate"],
+        "near_miss_categories": ["urgent"]
+      }
+    },
+    {
+      "email_id": "m010",
+      "subject": "Industry insights: AI trends shaping 2024",
+      "body": "This week in our curated digest: how generative AI is transforming enterprise workflows, a deep dive into retrieval-augmented generation, and interviews with three CTOs on their AI adoption strategies. Plus: our top picks for open-source tools released this month. Subscribe to our premium tier for full access to all articles and the weekly podcast.",
+      "sender": "digest@aiweekly.substack.com",
+      "timestamp": "2024-01-16T07:00:00Z",
+      "ground_truth": {
+        "category": "newsletter",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["spam"]
+      }
+    }
+  ]
+}

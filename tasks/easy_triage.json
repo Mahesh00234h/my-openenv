@@ -1,0 +1,70 @@
+{
+  "task_id": "easy_triage",
+  "emails": [
+    {
+      "email_id": "e001",
+      "subject": "CONGRATULATIONS! You've won a $1,000 gift card!",
+      "body": "Click here NOW to claim your prize! Limited time offer! You have been selected as our lucky winner. Provide your credit card details to receive your reward. Act fast before this offer expires!",
+      "sender": "prizes@win-big-rewards.net",
+      "timestamp": "2024-01-15T09:00:00Z",
+      "ground_truth": {
+        "category": "spam",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["newsletter"]
+      }
+    },
+    {
+      "email_id": "e002",
+      "subject": "URGENT: Production database is down — all services affected",
+      "body": "Our production database cluster went offline at 14:32 UTC. All customer-facing services are returning 500 errors. The on-call team is investigating but needs immediate authorization to spin up the failover cluster. Please respond ASAP with approval or call the incident bridge at ext. 911.",
+      "sender": "oncall@ops.company.com",
+      "timestamp": "2024-01-15T14:35:00Z",
+      "ground_truth": {
+        "category": "urgent",
+        "priority": "urgent",
+        "required_response_keywords": ["approve", "failover"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "e003",
+      "subject": "The Weekly Digest — Top Tech Stories This Week",
+      "body": "Welcome to this week's edition of The Weekly Digest! In this issue: AI breakthroughs reshape the industry, new open-source tools for developers, and our curated reading list. Click to read more. To unsubscribe, click here.",
+      "sender": "newsletter@techdigest.io",
+      "timestamp": "2024-01-15T08:00:00Z",
+      "ground_truth": {
+        "category": "newsletter",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["spam"]
+      }
+    },
+    {
+      "email_id": "e004",
+      "subject": "Cannot log in to my account — password reset not working",
+      "body": "Hi support team, I've been trying to log in to my account for the past two hours but keep getting an 'invalid credentials' error. I tried the password reset link but the email never arrived. My account email is user@example.com. Please help me regain access as soon as possible.",
+      "sender": "jane.doe@example.com",
+      "timestamp": "2024-01-15T11:20:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "medium",
+        "required_response_keywords": ["password", "reset", "account"],
+        "near_miss_categories": ["internal"]
+      }
+    },
+    {
+      "email_id": "e005",
+      "subject": "Q1 All-Hands Meeting — Thursday 3pm, Conference Room B",
+      "body": "Hi team, just a reminder that our Q1 all-hands meeting is scheduled for this Thursday at 3:00 PM in Conference Room B (and on Zoom for remote staff). Agenda: Q1 results review, roadmap preview, and open Q&A. Please come prepared with any questions. See you there!",
+      "sender": "alice.manager@company.com",
+      "timestamp": "2024-01-15T10:00:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "medium",
+        "required_response_keywords": [],
+        "near_miss_categories": ["support"]
+      }
+    }
+  ]
+}

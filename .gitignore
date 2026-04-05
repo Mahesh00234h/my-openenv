@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Hypothesis
+.hypothesis/
+
+# Pytest
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Kiro
+.kiro/
+
+# Windows
+%SystemDrive%/
+Thumbs.db
+Desktop.ini
+
+# Misc
+*.log
+.DS_Store

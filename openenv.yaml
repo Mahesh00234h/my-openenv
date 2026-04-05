@@ -1,0 +1,40 @@
+name: email-triage-env
+version: "1.0.0"
+description: >
+  An OpenEnv-compliant email triage environment where an AI agent reads incoming
+  emails and decides how to categorize, prioritize, and respond to them.
+  Includes three tasks of increasing difficulty (easy, medium, hard) with
+  deterministic scoring and partial-credit rewards at every step.
+
+observation_space:
+  type: object
+  fields:
+    email_id: string
+    subject: string
+    body: string
+    sender: string
+    timestamp: string
+    inbox_position: integer
+    total_emails: integer
+
+action_space:
+  type: object
+  fields:
+    email_id: string
+    category:
+      type: string
+      enum: [spam, urgent, newsletter, support, internal]
+    priority:
+      type: string
+      enum: [low, medium, high, urgent]
+    suggested_response: string
+
+reward_range: [0.0, 1.0]
+
+tasks:
+  - easy_triage
+  - medium_triage
+  - hard_triage
+
+tags:
+  - openenv

@@ -1,0 +1,200 @@
+{
+  "task_id": "hard_triage",
+  "emails": [
+    {
+      "email_id": "h001",
+      "subject": "Following up on our conversation",
+      "body": "Hi, just wanted to follow up on what we discussed last week. I think the proposal makes sense and I'm ready to move forward. Let me know if you need anything else from my side. Thanks.",
+      "sender": "michael.chen@partnerco.com",
+      "timestamp": "2024-01-17T09:05:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "medium",
+        "required_response_keywords": ["proposal", "confirm", "next steps"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "h002",
+      "subject": "Re: Re: Account access issue",
+      "body": "Still no resolution. I've been waiting 4 days now. My entire team is locked out and we have a client demo in 2 hours. If this isn't fixed immediately I will be escalating to your CEO and filing a chargeback on our annual contract.",
+      "sender": "director.ops@bigclient.com",
+      "timestamp": "2024-01-17T10:30:00Z",
+      "ground_truth": {
+        "category": "urgent",
+        "priority": "urgent",
+        "required_response_keywords": ["access", "restore", "escalate", "demo"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "h003",
+      "subject": "Unsubscribe request",
+      "body": "Please remove me from all marketing lists. I've clicked unsubscribe three times and keep receiving emails. This is my final request before I report this as spam to my email provider.",
+      "sender": "annoyed.user@hotmail.com",
+      "timestamp": "2024-01-17T08:15:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "medium",
+        "required_response_keywords": ["unsubscribe", "remove", "confirm"],
+        "near_miss_categories": ["spam"]
+      }
+    },
+    {
+      "email_id": "h004",
+      "subject": "Re: Q4 budget approval — final reminder",
+      "body": "This is the third time I'm sending this. The Q4 budget needs sign-off by 5pm today or the finance team will freeze all discretionary spending for the quarter. I've attached the updated spreadsheet. Please review and reply with approval or comments.",
+      "sender": "finance.lead@company.com",
+      "timestamp": "2024-01-17T11:45:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "urgent",
+        "required_response_keywords": ["approve", "budget", "finance"],
+        "near_miss_categories": ["urgent"]
+      }
+    },
+    {
+      "email_id": "h005",
+      "subject": "Exciting partnership opportunity — exclusive offer",
+      "body": "Dear Business Owner, we represent a network of 50,000 verified buyers actively looking for products like yours. For a limited time, we're offering premium placement in our marketplace for just $299/month. Our clients see an average 340% ROI. Reply to this email to schedule a free consultation with one of our growth specialists.",
+      "sender": "partnerships@growth-marketplace-pro.net",
+      "timestamp": "2024-01-17T07:30:00Z",
+      "ground_truth": {
+        "category": "spam",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["newsletter"]
+      }
+    },
+    {
+      "email_id": "h006",
+      "subject": "Re: Billing discrepancy — invoice #INV-2024-0089",
+      "body": "Hi, I raised this issue two weeks ago (ticket #TK-8821) and was told it would be resolved in 3-5 business days. I've now been charged twice for the same invoice. The duplicate charge is $4,200. I need a refund processed today or I will dispute both charges with my bank. Please confirm receipt of this email.",
+      "sender": "accounts.payable@mediumcorp.com",
+      "timestamp": "2024-01-17T13:00:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "high",
+        "required_response_keywords": ["refund", "invoice", "billing", "confirm"],
+        "near_miss_categories": ["urgent"]
+      }
+    },
+    {
+      "email_id": "h007",
+      "subject": "Weekly product roundup — new integrations and tips",
+      "body": "This week: we've launched native Slack and Jira integrations, improved our mobile app performance by 40%, and published a new guide on automating your workflow. Plus, don't miss our live Q&A session this Thursday at 2pm ET. Forward this to a colleague who might find it useful. Manage your email preferences below.",
+      "sender": "product-updates@saasplatform.com",
+      "timestamp": "2024-01-17T08:00:00Z",
+      "ground_truth": {
+        "category": "newsletter",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["spam"]
+      }
+    },
+    {
+      "email_id": "h008",
+      "subject": "Re: Re: Re: Server migration — go/no-go decision",
+      "body": "Team, we've been going back and forth on this for two weeks. The migration window is tonight at 11pm UTC. Based on the last thread, ops is ready, but the app team flagged a potential issue with the session store. I need a definitive go/no-go from the app lead by 6pm today. If I don't hear back, I'm treating it as a no-go and rescheduling. This affects 12 downstream services.",
+      "sender": "infra.lead@company.com",
+      "timestamp": "2024-01-17T14:10:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "urgent",
+        "required_response_keywords": ["go", "migration", "confirm", "session"],
+        "near_miss_categories": ["urgent"]
+      }
+    },
+    {
+      "email_id": "h009",
+      "subject": "Question about your API pricing",
+      "body": "Hello, I'm evaluating your platform for our startup. We're expecting around 2 million API calls per month initially, scaling to 20 million within 6 months. Your pricing page shows tiers up to 1 million calls but nothing beyond that. Can you send me a custom quote? We're also interested in SLA guarantees and dedicated support. We need to make a decision by end of this week.",
+      "sender": "cto@promising-startup.io",
+      "timestamp": "2024-01-17T15:20:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "high",
+        "required_response_keywords": ["pricing", "quote", "SLA", "enterprise"],
+        "near_miss_categories": ["internal"]
+      }
+    },
+    {
+      "email_id": "h010",
+      "subject": "Re: Suspicious login attempts on your account",
+      "body": "Hi, I received your automated alert about 47 failed login attempts from IP 185.220.101.x (a known Tor exit node) on my account. I did NOT initiate these. I've already changed my password but I'm concerned my account data may have been accessed before I noticed. Can you confirm whether any data was exfiltrated and whether I need to notify my own customers under GDPR?",
+      "sender": "privacy.officer@eucompany.de",
+      "timestamp": "2024-01-17T16:05:00Z",
+      "ground_truth": {
+        "category": "urgent",
+        "priority": "urgent",
+        "required_response_keywords": ["security", "breach", "GDPR", "investigate", "data"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "h011",
+      "subject": "Feedback on last month's webinar",
+      "body": "Hi team, I attended your webinar on 'Scaling microservices in 2024' last month. Overall it was good but the audio quality in the second half was poor and the Q&A felt rushed. The content itself was excellent — especially the section on service mesh patterns. Would love to see a follow-up session on observability. Keep up the good work.",
+      "sender": "dev.feedback@techuser.com",
+      "timestamp": "2024-01-17T10:00:00Z",
+      "ground_truth": {
+        "category": "newsletter",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "h012",
+      "subject": "Re: Performance degradation — is this a known issue?",
+      "body": "Following up on my ticket from Monday. Our dashboard load times have gone from 1.2s to 18s after your last deployment. I've attached profiling traces showing the bottleneck is in your /api/v2/reports endpoint. Our SLA with our own clients requires sub-3s response times and we're currently in breach. We need either a hotfix or a rollback plan. What is the ETA?",
+      "sender": "platform.eng@b2b-customer.com",
+      "timestamp": "2024-01-17T12:30:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "urgent",
+        "required_response_keywords": ["performance", "hotfix", "rollback", "ETA", "SLA"],
+        "near_miss_categories": ["urgent"]
+      }
+    },
+    {
+      "email_id": "h013",
+      "subject": "You may have won — claim your reward points",
+      "body": "Congratulations! Our records show you have 14,750 unclaimed reward points expiring on January 31st. Log in to your account to redeem them for gift cards, travel miles, or cash back. Points are non-transferable and expire if not redeemed. This is an automated notification from our loyalty program.",
+      "sender": "loyalty@rewards-notify.com",
+      "timestamp": "2024-01-17T07:00:00Z",
+      "ground_truth": {
+        "category": "spam",
+        "priority": "low",
+        "required_response_keywords": [],
+        "near_miss_categories": ["newsletter"]
+      }
+    },
+    {
+      "email_id": "h014",
+      "subject": "Re: Re: Onboarding checklist — week 1 complete",
+      "body": "Hi, I'm the new data engineer who started Monday. I've completed all the week-1 onboarding items except I still don't have access to the production data warehouse or the internal analytics Slack channel. My manager (David Park) is traveling and unresponsive. I need these accesses to start on my first assigned project, which is due Friday. Who else can approve this?",
+      "sender": "new.hire.priya@company.com",
+      "timestamp": "2024-01-17T11:00:00Z",
+      "ground_truth": {
+        "category": "internal",
+        "priority": "high",
+        "required_response_keywords": ["access", "approve", "onboarding", "warehouse"],
+        "near_miss_categories": ["support"]
+      }
+    },
+    {
+      "email_id": "h015",
+      "subject": "Re: Contract renewal — terms under review",
+      "body": "Hi, our legal team has reviewed the renewed contract you sent over. We have two sticking points: the liability cap in section 8.3 and the data residency clause in section 12.1 (we require EU-only storage). We're happy to proceed once these are addressed. Our contract expires in 11 days so we need a revised draft by Thursday at the latest. Please loop in your legal team.",
+      "sender": "procurement@enterprise-eu.com",
+      "timestamp": "2024-01-17T14:45:00Z",
+      "ground_truth": {
+        "category": "support",
+        "priority": "high",
+        "required_response_keywords": ["contract", "legal", "data residency", "revised"],
+        "near_miss_categories": ["internal"]
+      }
+    }
+  ]
+}
