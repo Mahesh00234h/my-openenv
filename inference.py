@@ -22,6 +22,7 @@ MAX_RETRIES = 3
 BACKOFF_DELAYS = [1, 2, 4]  # seconds
 
 # Environment variables — API_BASE_URL and MODEL_NAME have defaults; HF_TOKEN does not
+# The validator injects API_KEY and API_BASE_URL — support both API_KEY and OPENAI_API_KEY
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
 HF_TOKEN = os.getenv("HF_TOKEN")
@@ -30,14 +31,16 @@ LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 
 
 def get_env_vars() -> tuple[str, str, str]:
-    """Read required environment variables. OPENAI_API_KEY is required; others have defaults."""
-    api_key = os.environ.get("OPENAI_API_KEY", "")
-    base_url = API_BASE_URL
-    model_name = MODEL_NAME
+    """Read required environment variables.
+    Supports both API_KEY (injected by validator) and OPENAI_API_KEY.
+    """
+    # Prefer API_KEY (injected by the hackathon validator), fall back to OPENAI_API_KEY
+    api_key = os.environ.get("API_KEY") or os.environ.get("OPENAI_API_KEY", "")
+    base_url = os.environ.get("API_BASE_URL", API_BASE_URL)
+    model_name = os.environ.get("MODEL_NAME", MODEL_NAME)
 
     if not api_key:
-        # Print warning but don't exit — validator may run without credentials
-        print("Warning: OPENAI_API_KEY is not set. LLM calls will fail.", file=sys.stderr)
+        print("Warning: neither API_KEY nor OPENAI_API_KEY is set. LLM calls will fail.", file=sys.stderr)
         api_key = "missing"
 
     return api_key, base_url, model_name
