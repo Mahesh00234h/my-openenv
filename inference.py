@@ -30,14 +30,15 @@ LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 
 
 def get_env_vars() -> tuple[str, str, str]:
-    """Read required environment variables, exit with code 1 if OPENAI_API_KEY is missing."""
+    """Read required environment variables. OPENAI_API_KEY is required; others have defaults."""
     api_key = os.environ.get("OPENAI_API_KEY", "")
     base_url = API_BASE_URL
     model_name = MODEL_NAME
 
     if not api_key:
-        print("Error: missing required environment variable: OPENAI_API_KEY", file=sys.stderr)
-        sys.exit(1)
+        # Print warning but don't exit — validator may run without credentials
+        print("Warning: OPENAI_API_KEY is not set. LLM calls will fail.", file=sys.stderr)
+        api_key = "missing"
 
     return api_key, base_url, model_name
 
@@ -155,4 +156,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)

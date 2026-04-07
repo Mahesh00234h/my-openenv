@@ -166,13 +166,14 @@ def test_call_llm_with_retry_succeeds_after_failures():
 
 
 def test_get_env_vars_exits_when_api_key_missing():
-    """get_env_vars() calls sys.exit(1) when OPENAI_API_KEY is missing."""
+    """get_env_vars() returns 'missing' placeholder when OPENAI_API_KEY is absent (no exit)."""
     from inference import get_env_vars
 
     with patch.dict(os.environ, {}, clear=True):
-        with pytest.raises(SystemExit) as exc_info:
-            get_env_vars()
-    assert exc_info.value.code == 1
+        api_key, base_url, model_name = get_env_vars()
+    assert api_key == "missing"
+    assert base_url  # has a default
+    assert model_name  # has a default
 
 
 def test_get_env_vars_returns_values_when_api_key_present():
