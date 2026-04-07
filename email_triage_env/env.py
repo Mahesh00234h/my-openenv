@@ -54,7 +54,7 @@ class EmailTriageEnv:
         if self._done:
             terminal_obs = self._terminal_observation()
             reward = Reward(
-                score=0.0,
+                score=0.001,
                 category_score=0.0,
                 priority_score=0.0,
                 response_score=0.0,
@@ -68,7 +68,7 @@ class EmailTriageEnv:
         if action.email_id != current_email["email_id"]:
             obs = self._make_observation(current_email, self._current_index, total)
             reward = Reward(
-                score=0.0,
+                score=0.001,
                 category_score=0.0,
                 priority_score=0.0,
                 response_score=0.0,

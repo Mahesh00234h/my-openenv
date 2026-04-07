@@ -58,6 +58,9 @@ def grade(action: Action, ground_truth: dict) -> Reward:
 
     final_score = base_score
 
+    # Clamp strictly to (0, 1) exclusive — validator requires score not equal to 0.0 or 1.0
+    final_score = max(0.001, min(0.999, final_score))
+
     # --- explanation ---
     parts = [
         f"category_score={category_score:.2f}",
