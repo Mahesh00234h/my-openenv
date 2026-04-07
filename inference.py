@@ -110,12 +110,13 @@ def call_llm_with_retry(client: OpenAI, model_name: str, prompt: str, email_id: 
 
 
 def run_task(env: EmailTriageEnv, client: OpenAI, model_name: str, task_id: str) -> float:
-    """Run a single task and return the total score."""
+    """Run a single task and return the mean per-email score, clamped to (0, 1) exclusive."""
     print(f"[START] task={task_id}")
 
     obs = env.reset(task_id)
     total_score = 0.0
     step_num = 0
+    total_emails = obs.total_emails
 
     while True:
         # Terminal observation — episode done
@@ -134,8 +135,13 @@ def run_task(env: EmailTriageEnv, client: OpenAI, model_name: str, task_id: str)
         if done:
             break
 
-    print(f"[END] task={task_id} total_score={total_score:.4f}")
-    return total_score
+    # Compute mean per-email score and clamp strictly to (0, 1)
+    n = max(step_num, total_emails, 1)
+    mean_score = total_score / n
+    mean_score = max(0.001, min(0.999, mean_score))
+
+    print(f"[END] task={task_id} total_score={mean_score:.4f}")
+    return mean_score
 
 
 def main():
