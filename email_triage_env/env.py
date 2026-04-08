@@ -79,7 +79,9 @@ class EmailTriageEnv:
             return obs, reward, self._done, info
 
         # Grade the action
-        reward = grade(action, current_email["ground_truth"])
+        reward = grade(action, current_email["ground_truth"],
+                       inbox_position=self._current_index,
+                       total_emails=total)
         self._cumulative_reward += reward.score
         self._current_index += 1
 

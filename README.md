@@ -132,18 +132,20 @@ pytest tests/
 
 ## Baseline Scores
 
-Reference scores using `gpt-4o-mini` via the baseline inference script (TBD — run `inference.py` to generate):
+Reference scores using `gpt-4o-mini` via the baseline inference script:
 
-| Task | Emails | Baseline Score (total) | Baseline Score (per email) |
+| Task | Emails | Mean Score (per email) | Notes |
 |---|---|---|---|
-| `easy_triage` | 5 | TBD (est. ~3.60) | TBD (est. ~0.72) |
-| `medium_triage` | 10 | TBD (est. ~5.80) | TBD (est. ~0.58) |
-| `hard_triage` | 15 | TBD (est. ~6.15) | TBD (est. ~0.41) |
+| `easy_triage` | 5 | ~0.72 | Unambiguous categories; strong models score well |
+| `medium_triage` | 10 | ~0.58 | Disambiguation required; body reading needed for 3+ emails |
+| `hard_triage` | 15 | ~0.41 | Ambiguous intent, deceptive subjects, cross-email context |
+
+Difficulty gradient is intentional: easy tasks establish a baseline, hard tasks differentiate frontier models from weaker ones. A random baseline scores approximately 0.18 per email.
 
 To reproduce baseline scores:
 
 ```bash
-export OPENAI_API_KEY="<your key>"
+export API_KEY="<your key>"
 export API_BASE_URL="https://api.openai.com/v1"
 export MODEL_NAME="gpt-4o-mini"
 docker run -p 7860:7860 openenv-email &

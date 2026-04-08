@@ -159,15 +159,15 @@
     },
     {
       "email_id": "h013",
-      "subject": "You may have won — claim your reward points",
-      "body": "Congratulations! Our records show you have 14,750 unclaimed reward points expiring on January 31st. Log in to your account to redeem them for gift cards, travel miles, or cash back. Points are non-transferable and expire if not redeemed. This is an automated notification from our loyalty program.",
-      "sender": "loyalty@rewards-notify.com",
+      "subject": "Important: Your account requires immediate attention",
+      "body": "Dear valued customer, we noticed unusual activity on your account. As a precautionary measure, we have temporarily limited your account access. To restore full access, please verify your identity by clicking the link below and entering your credentials. This link expires in 24 hours. If you did not request this, please ignore this email. — Security Team, AccountsPortal",
+      "sender": "security-noreply@accounts-portal-verify.com",
       "timestamp": "2024-01-17T07:00:00Z",
       "ground_truth": {
         "category": "spam",
         "priority": "low",
         "required_response_keywords": [],
-        "near_miss_categories": ["newsletter"]
+        "near_miss_categories": ["urgent"]
       }
     },
     {

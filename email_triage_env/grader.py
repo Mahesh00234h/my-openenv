@@ -3,8 +3,15 @@ from email_triage_env.models import Action, Reward
 PRIORITY_SCALE = ["low", "medium", "high", "urgent"]
 
 
-def grade(action: Action, ground_truth: dict) -> Reward:
-    """Deterministic grader: scores an Action against ground_truth labels."""
+def grade(action: Action, ground_truth: dict, inbox_position: int = 0, total_emails: int = 1) -> Reward:
+    """Deterministic grader: scores an Action against ground_truth labels.
+
+    Args:
+        action: The agent's triage decision.
+        ground_truth: Dict with category, priority, required_response_keywords, near_miss_categories.
+        inbox_position: 0-indexed position of this email in the inbox (earlier = higher position bonus).
+        total_emails: Total emails in the inbox (used to compute position bonus).
+    """
 
     # --- category_score ---
     gt_category = ground_truth["category"]
@@ -45,7 +52,7 @@ def grade(action: Action, ground_truth: dict) -> Reward:
     # --- base weighted score ---
     base_score = 0.4 * category_score + 0.3 * priority_score + 0.3 * response_score
 
-    # --- bonus / penalty ---
+    # --- urgent bonus / false-urgent penalty ---
     bonus_applied = False
     penalty_applied = False
 
@@ -56,9 +63,21 @@ def grade(action: Action, ground_truth: dict) -> Reward:
         base_score = max(0.0, base_score - 0.1)
         penalty_applied = True
 
+    # --- position bonus: reward processing high-priority emails early ---
+    # Emails earlier in the inbox (lower inbox_position) that are correctly
+    # identified as urgent get a small bonus, encouraging agents to prioritize.
+    position_bonus = 0.0
+    position_bonus_applied = False
+    if gt_priority == "urgent" and category_score >= 0.5 and priority_score >= 0.5:
+        # Bonus scales from +0.03 (first email) to 0.0 (last email)
+        n = max(total_emails, 1)
+        position_bonus = 0.03 * (1.0 - inbox_position / n)
+        base_score = min(1.0, base_score + position_bonus)
+        position_bonus_applied = True
+
     final_score = base_score
 
-    # Clamp strictly to (0, 1) exclusive — validator requires score not equal to 0.0 or 1.0
+    # Clamp strictly to (0, 1) exclusive
     final_score = max(0.001, min(0.999, final_score))
 
     # --- explanation ---
@@ -72,6 +91,8 @@ def grade(action: Action, ground_truth: dict) -> Reward:
         parts.append("urgent bonus +0.05 applied (capped at 1.0)")
     if penalty_applied:
         parts.append("false-urgent penalty -0.1 applied (floored at 0.0)")
+    if position_bonus_applied:
+        parts.append(f"position bonus +{position_bonus:.3f} applied (early urgent detection)")
     explanation = "; ".join(parts)
 
     return Reward(
