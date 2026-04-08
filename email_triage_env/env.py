@@ -95,9 +95,17 @@ class EmailTriageEnv:
 
     def state(self) -> dict:
         remaining = 0 if self._inbox is None else max(0, len(self._inbox) - self._current_index)
+        total = 0 if self._inbox is None else len(self._inbox)
+        steps_done = self._current_index
+        # Normalize cumulative reward to a per-step mean, clamped strictly to (0, 1)
+        if steps_done > 0:
+            mean_score = self._cumulative_reward / steps_done
+        else:
+            mean_score = 0.5  # neutral default before any steps
+        mean_score = max(0.001, min(0.999, mean_score))
         return {
             "task_id": self._task_id,
             "current_index": self._current_index,
-            "cumulative_reward": self._cumulative_reward,
+            "cumulative_reward": mean_score,
             "remaining_emails": remaining,
         }

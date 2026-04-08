@@ -28,11 +28,13 @@ def step(action: Action) -> Response:
     except RuntimeError as e:
         raise HTTPException(status_code=400, detail=str(e))
     import json
+    # task_score is the per-step reward score, always in (0, 1) exclusive
     payload = {
         "observation": json.loads(obs.model_dump_json()),
         "reward": json.loads(reward.model_dump_json()),
         "done": done,
         "info": info,
+        "task_score": reward.score,
     }
     return Response(content=json.dumps(payload), media_type="application/json")
 
