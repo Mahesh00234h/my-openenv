@@ -28,5 +28,5 @@ class Reward(BaseModel):
     @field_validator("score")
     @classmethod
     def clamp_score(cls, v: float) -> float:
-        """Ensure score is strictly between 0 and 1 (exclusive)."""
-        return max(0.001, min(0.999, v))
+        """Ensure score is strictly between 0 and 1 (exclusive). Force rebuild v2."""
+        return max(0.001, min(0.999, float(v)))
