@@ -1,53 +1,56 @@
 """
 Baseline inference script for the Email Triage Environment.
 
-Reads OPENAI_API_KEY, API_BASE_URL, MODEL_NAME from environment variables,
-runs all three tasks sequentially using the OpenAI Python client, and emits
-structured log lines for each task/step.
+Follows the OpenEnv sample inference.py format exactly.
 """
 
 import json
 import os
 import sys
 import time
+from typing import List, Optional
 
 from openai import OpenAI
 
 from email_triage_env.env import EmailTriageEnv
 from email_triage_env.models import Action
 
-TASKS = ["easy_triage", "medium_triage", "hard_triage"]
-
-MAX_RETRIES = 3
-BACKOFF_DELAYS = [1, 2, 4]  # seconds
-
-# Environment variables — API_BASE_URL and MODEL_NAME have defaults; HF_TOKEN does not
-# The validator injects API_KEY and API_BASE_URL — support both API_KEY and OPENAI_API_KEY
+# Environment variables
+API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY") or os.getenv("OPENAI_API_KEY", "")
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
 HF_TOKEN = os.getenv("HF_TOKEN")
-# Optional — used when loading the environment from a local Docker image
 LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 
+TASKS = ["easy_triage", "medium_triage", "hard_triage"]
+BENCHMARK = "email-triage"
+MAX_RETRIES = 3
+BACKOFF_DELAYS = [1, 2, 4]
+SUCCESS_SCORE_THRESHOLD = 0.1
 
-def get_env_vars() -> tuple[str, str, str]:
-    """Read required environment variables.
-    Supports both API_KEY (injected by validator) and OPENAI_API_KEY.
-    """
-    # Prefer API_KEY (injected by the hackathon validator), fall back to OPENAI_API_KEY
-    api_key = os.environ.get("API_KEY") or os.environ.get("OPENAI_API_KEY", "")
-    base_url = os.environ.get("API_BASE_URL", API_BASE_URL)
-    model_name = os.environ.get("MODEL_NAME", MODEL_NAME)
 
-    if not api_key:
-        print("Warning: neither API_KEY nor OPENAI_API_KEY is set. LLM calls will fail.", file=sys.stderr)
-        api_key = "missing"
+def log_start(task: str, env: str, model: str) -> None:
+    print(f"[START] task={task} env={env} model={model}", flush=True)
 
-    return api_key, base_url, model_name
+
+def log_step(step: int, action: str, reward: float, done: bool, error: Optional[str]) -> None:
+    error_val = error if error else "null"
+    done_val = str(done).lower()
+    print(
+        f"[STEP] step={step} action={action} reward={reward:.2f} done={done_val} error={error_val}",
+        flush=True,
+    )
+
+
+def log_end(success: bool, steps: int, score: float, rewards: List[float]) -> None:
+    rewards_str = ",".join(f"{r:.2f}" for r in rewards)
+    print(
+        f"[END] success={str(success).lower()} steps={steps} score={score:.3f} rewards={rewards_str}",
+        flush=True,
+    )
 
 
 def build_prompt(obs) -> str:
-    """Build a prompt asking the LLM to triage the given email."""
     return f"""You are an email triage assistant. Analyze the following email and respond with a JSON object.
 
 Email details:
@@ -68,17 +71,12 @@ Respond with ONLY a valid JSON object matching this schema:
 Do not include any explanation or markdown — only the raw JSON object."""
 
 
-def call_llm_with_retry(client: OpenAI, model_name: str, prompt: str, email_id: str) -> Action:
-    """
-    Call the LLM to produce an Action, retrying up to MAX_RETRIES times with
-    exponential backoff (1s, 2s, 4s). Returns a zero-score dummy Action on
-    final failure.
-    """
+def call_llm_with_retry(client: OpenAI, prompt: str, email_id: str) -> Action:
     last_exc = None
     for attempt in range(MAX_RETRIES + 1):
         try:
             response = client.chat.completions.create(
-                model=model_name,
+                model=MODEL_NAME,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.0,
             )
@@ -90,83 +88,81 @@ def call_llm_with_retry(client: OpenAI, model_name: str, prompt: str, email_id: 
             if attempt < MAX_RETRIES:
                 delay = BACKOFF_DELAYS[attempt]
                 print(
-                    f"  [WARN] LLM call failed (attempt {attempt + 1}/{MAX_RETRIES + 1}): {exc}. "
-                    f"Retrying in {delay}s...",
-                    file=sys.stderr,
+                    f"[DEBUG] LLM call failed (attempt {attempt + 1}): {exc}. Retrying in {delay}s...",
+                    file=sys.stderr, flush=True,
                 )
                 time.sleep(delay)
 
-    # Final failure — return a dummy Action with score=0.0
-    print(
-        f"  [ERROR] LLM call failed after {MAX_RETRIES} retries: {last_exc}. Recording score=0.0.",
-        file=sys.stderr,
-    )
-    return Action(
-        email_id=email_id,
-        category="spam",
-        priority="low",
-        suggested_response="",
-    )
+    print(f"[DEBUG] LLM failed after {MAX_RETRIES} retries: {last_exc}", file=sys.stderr, flush=True)
+    return Action(email_id=email_id, category="spam", priority="low", suggested_response="")
 
 
-def run_task(env: EmailTriageEnv, client: OpenAI, model_name: str, task_id: str) -> float:
-    """Run a single task and return the mean per-email score in (0, 1) exclusive."""
-    print(f"[START] task={task_id}")
+def run_task(env: EmailTriageEnv, client: OpenAI, task_id: str) -> float:
+    log_start(task=task_id, env=BENCHMARK, model=MODEL_NAME)
 
     obs = env.reset(task_id)
-    total_score = 0.0
-    step_num = 0
-    total_emails = obs.total_emails
+    rewards: List[float] = []
+    steps_taken = 0
+    score = 0.0
+    success = False
 
-    while True:
-        # Terminal observation — episode done
-        if obs.email_id == "" and obs.body == "":
-            break
+    try:
+        step = 0
+        while True:
+            if obs.email_id == "" and obs.body == "":
+                break
 
-        step_num += 1
-        prompt = build_prompt(obs)
-        action = call_llm_with_retry(client, model_name, prompt, obs.email_id)
+            step += 1
+            prompt = build_prompt(obs)
+            action = call_llm_with_retry(client, prompt, obs.email_id)
+            action_str = f"triage({obs.email_id!r})"
 
-        obs, reward, done, _info = env.step(action)
-        total_score += reward.score
+            obs, reward_obj, done, _info = env.step(action)
+            reward = float(reward_obj.score)
+            rewards.append(reward)
+            steps_taken = step
 
-        print(f"[STEP] task={task_id} step={step_num} score={reward.score:.4f}")
+            log_step(step=step, action=action_str, reward=reward, done=done, error=None)
 
-        if done:
-            break
+            if done:
+                break
 
-    # Report mean per-email score, clamped strictly to (0, 1)
-    n = max(step_num, total_emails, 1)
-    task_score = total_score / n
-    task_score = max(0.001, min(0.999, task_score))
+        # Compute score as mean reward, clamped to (0, 1) exclusive
+        if rewards:
+            score = sum(rewards) / len(rewards)
+        else:
+            score = 0.5
+        score = max(0.001, min(0.999, score))
+        success = score >= SUCCESS_SCORE_THRESHOLD
 
-    print(f"[END] task={task_id} total_score={task_score:.4f}")
-    return task_score
+    finally:
+        log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
+
+    return score
 
 
 def main():
-    api_key, base_url, model_name = get_env_vars()
+    if not API_KEY:
+        print("[DEBUG] Warning: no API key set", file=sys.stderr, flush=True)
 
-    client = OpenAI(api_key=api_key, base_url=base_url)
+    client = OpenAI(api_key=API_KEY or "missing", base_url=API_BASE_URL)
     env = EmailTriageEnv()
 
-    task_scores: dict[str, float] = {}
-
+    task_scores = {}
     for task_id in TASKS:
-        score = run_task(env, client, model_name, task_id)
+        score = run_task(env, client, task_id)
         task_scores[task_id] = score
 
-    print("\n--- Results ---")
+    print("\n--- Results ---", flush=True)
     for task_id, score in task_scores.items():
-        print(f"  {task_id}: {score:.4f}")
-
+        print(f"  {task_id}: {score:.4f}", flush=True)
     mean_score = sum(task_scores.values()) / len(task_scores)
-    print(f"  overall_mean: {mean_score:.4f}")
+    print(f"  overall_mean: {mean_score:.4f}", flush=True)
 
 
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
+        print(f"[DEBUG] Error: {e}", file=sys.stderr, flush=True)
         sys.exit(1)
