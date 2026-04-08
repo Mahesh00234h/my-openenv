@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class Observation(BaseModel):
@@ -19,8 +19,14 @@ class Action(BaseModel):
 
 
 class Reward(BaseModel):
-    score: float  # [0.0, 1.0]
+    score: float  # strictly (0.0, 1.0) exclusive
     category_score: float
     priority_score: float
     response_score: float
     explanation: str
+
+    @field_validator("score")
+    @classmethod
+    def clamp_score(cls, v: float) -> float:
+        """Ensure score is strictly between 0 and 1 (exclusive)."""
+        return max(0.001, min(0.999, v))
