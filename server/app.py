@@ -1,10 +1,9 @@
 from fastapi import FastAPI, HTTPException, Query, Response
-from email_triage_env.env import EmailTriageEnv
-from email_triage_env.models import Action
+from env import ChiefOfStaffEnv
 
 app = FastAPI(title="Email Triage Environment")
 
-env = EmailTriageEnv()
+env = ChiefOfStaffEnv()
 
 
 @app.get("/")
@@ -13,36 +12,24 @@ def root():
 
 
 @app.api_route("/reset", methods=["GET", "POST"])
-def reset(task_id: str = Query(default="easy_triage")) -> Response:
+def reset(task_id: str = Query(default="easy_cos")) -> Response:
+    import json
     try:
         obs = env.reset(task_id)
-    except ValueError as e:
+    except (ValueError, FileNotFoundError) as e:
         raise HTTPException(status_code=422, detail=str(e))
-    return Response(content=obs.model_dump_json(), media_type="application/json")
+    return Response(content=json.dumps(obs, ensure_ascii=False), media_type="application/json; charset=utf-8")
 
 
 @app.post("/step")
-def step(action: Action) -> Response:
-    try:
-        obs, reward, done, info = env.step(action)
-    except RuntimeError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    import json
-    # task_score is the per-step reward score, always in (0, 1) exclusive
-    payload = {
-        "observation": json.loads(obs.model_dump_json()),
-        "reward": json.loads(reward.model_dump_json()),
-        "done": done,
-        "info": info,
-        "task_score": reward.score,
-    }
-    return Response(content=json.dumps(payload), media_type="application/json")
+async def step(action: dict):
+    return env.step(action)
 
 
 @app.get("/state")
 def state() -> Response:
     import json
-    return Response(content=json.dumps(env.state()), media_type="application/json")
+    return Response(content=json.dumps(env.state(), ensure_ascii=False), media_type="application/json; charset=utf-8")
 
 
 def main():

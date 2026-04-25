@@ -1,0 +1,25 @@
+{
+  "model": "random_agent",
+  "type": "random_baseline",
+  "timestamp": "2026-04-25T12:06:26.806671+00:00",
+  "results": {
+    "easy_cos": {
+      "email": 0.42,
+      "calendar": 0.6,
+      "delegation": 0.15,
+      "combined": 0.38
+    },
+    "medium_cos": {
+      "email": 0.42,
+      "calendar": 0.6,
+      "delegation": 0.15,
+      "combined": 0.38
+    },
+    "hard_cos": {
+      "email": 0.42,
+      "calendar": 0.6,
+      "delegation": 0.15,
+      "combined": 0.38
+    }
+  }
+}

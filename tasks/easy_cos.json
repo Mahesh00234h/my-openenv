@@ -1,0 +1,200 @@
+{
+    "task_id": "easy_cos",
+    "emails": [
+        {
+            "email_id": "e001",
+            "subject": "URGENT: Production API returning 503 errors — customers affected",
+            "body": "Our payment API has been returning 503 errors since 09:14 UTC. Approximately 400 customers cannot complete checkout. The on-call engineer needs your approval to trigger the failover to the secondary region. Please respond immediately or call the incident bridge at ext. 911.",
+            "sender": "oncall@ops.company.com",
+            "timestamp": "2024-03-11T09:20:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "approve",
+                    "failover"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e002",
+            "subject": "You've been selected for an exclusive survey — $50 reward!",
+            "body": "Dear valued customer, you have been randomly selected to participate in a 2-minute survey. Complete it today and receive a $50 Amazon gift card. Click the link below to start. Offer expires in 24 hours. Unsubscribe here.",
+            "sender": "surveys@market-rewards-hub.biz",
+            "timestamp": "2024-03-11T08:05:00Z",
+            "ground_truth": {
+                "category": "spam",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "newsletter"
+                ]
+            }
+        },
+        {
+            "email_id": "e003",
+            "subject": "Monthly Product Newsletter — March Edition",
+            "body": "Hello! Here is your March product update. This month we shipped dark mode, improved search performance by 40%, and launched our new mobile app. Read the full release notes on our blog. You are receiving this because you opted in to product updates.",
+            "sender": "product@company.com",
+            "timestamp": "2024-03-11T07:00:00Z",
+            "ground_truth": {
+                "category": "newsletter",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "internal"
+                ]
+            }
+        },
+        {
+            "email_id": "e004",
+            "subject": "Re: Invoice #4821 — payment not received",
+            "body": "Hi, I am following up on invoice #4821 sent three weeks ago for $12,400. Our accounting team has not received payment and the due date has passed. Could you please confirm the payment status or let me know if there is an issue? We would like to resolve this before end of quarter.",
+            "sender": "billing@vendor-solutions.com",
+            "timestamp": "2024-03-11T10:30:00Z",
+            "ground_truth": {
+                "category": "support",
+                "priority": "high",
+                "required_response_keywords": [
+                    "invoice",
+                    "payment",
+                    "confirm"
+                ],
+                "near_miss_categories": [
+                    "internal"
+                ]
+            }
+        },
+        {
+            "email_id": "e005",
+            "subject": "Engineering All-Hands rescheduled to Friday 2pm",
+            "body": "Team, due to a conflict with the board presentation, the Engineering All-Hands originally scheduled for Thursday has been moved to Friday at 2:00 PM in the main auditorium. Zoom link remains the same. Please update your calendars. Apologies for the short notice.",
+            "sender": "eng-ops@company.com",
+            "timestamp": "2024-03-11T11:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "medium",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        }
+    ],
+    "conflicts": [
+        {
+            "conflict_id": "c001",
+            "event_a": {
+                "title": "Production Incident Post-Mortem",
+                "time": "2024-03-11T14:00:00Z",
+                "attendees": [
+                    "cto@company.com",
+                    "oncall@ops.company.com",
+                    "you@company.com"
+                ],
+                "vip": true
+            },
+            "event_b": {
+                "title": "Vendor Demo: New Analytics Platform",
+                "time": "2024-03-11T14:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "sales@vendor.com"
+                ],
+                "vip": false
+            },
+            "conflict_reason": "same_time",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_b",
+                "acceptable_resolutions": [
+                    "cancel_b",
+                    "delegate_a"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c002",
+            "event_a": {
+                "title": "1:1 with Direct Report — Career Development",
+                "time": "2024-03-11T16:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "junior.dev@company.com"
+                ],
+                "vip": false
+            },
+            "event_b": {
+                "title": "Board Member Check-in Call",
+                "time": "2024-03-11T16:30:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "board.member@investors.com"
+                ],
+                "vip": true
+            },
+            "conflict_reason": "back_to_back_travel",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_a",
+                "acceptable_resolutions": [
+                    "delegate_a"
+                ]
+            }
+        }
+    ],
+    "tasks": [
+        {
+            "task_id": "t001",
+            "title": "Coordinate failover approval and incident response for payment API outage",
+            "source_email_id": "e001",
+            "urgency": "urgent",
+            "requires_technical": true,
+            "ground_truth": {
+                "correct_assignee": "manager",
+                "acceptable_assignees": [
+                    "external"
+                ],
+                "required_message_keywords": [
+                    "failover",
+                    "approval",
+                    "incident",
+                    "payment"
+                ]
+            }
+        },
+        {
+            "task_id": "t002",
+            "title": "Follow up on overdue invoice #4821 with vendor",
+            "source_email_id": "e004",
+            "urgency": "medium",
+            "requires_technical": false,
+            "ground_truth": {
+                "correct_assignee": "junior",
+                "acceptable_assignees": [
+                    "self"
+                ],
+                "required_message_keywords": [
+                    "invoice",
+                    "payment",
+                    "follow up"
+                ]
+            }
+        }
+    ]
+}
