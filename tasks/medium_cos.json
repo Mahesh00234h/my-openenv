@@ -1,0 +1,351 @@
+{
+    "task_id": "medium_cos",
+    "emails": [
+        {
+            "email_id": "e001",
+            "subject": "CRITICAL: Database replication lag exceeding 30 seconds",
+            "body": "Replication lag on the primary read replica has exceeded 30 seconds and is climbing. Write throughput is unaffected but read-heavy services (reporting dashboard, analytics API) are serving stale data. The DBA team is requesting authorization to promote the secondary replica and restart replication. This needs a decision in the next 15 minutes.",
+            "sender": "dba-team@ops.company.com",
+            "timestamp": "2024-04-08T10:05:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "authorize",
+                    "replica",
+                    "replication"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e002",
+            "subject": "Feedback on last week's design review",
+            "body": "Hey, just wanted to share some thoughts from last week's design review. Overall the team felt the new onboarding flow is a big improvement. A few minor concerns around the mobile breakpoints — nothing blocking. Happy to jump on a call if you want to discuss before the next sprint planning.",
+            "sender": "ux.lead@company.com",
+            "timestamp": "2024-04-08T09:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e003",
+            "subject": "Your subscription renewal — action required",
+            "body": "Your annual subscription to CloudMonitor Pro renews in 7 days. Your current plan: Enterprise ($4,200/year). To continue uninterrupted service, please confirm your billing details. If you wish to downgrade or cancel, contact us before the renewal date. Log in to manage your subscription.",
+            "sender": "billing@cloudmonitor.io",
+            "timestamp": "2024-04-08T08:30:00Z",
+            "ground_truth": {
+                "category": "support",
+                "priority": "medium",
+                "required_response_keywords": [
+                    "confirm",
+                    "subscription",
+                    "billing"
+                ],
+                "near_miss_categories": [
+                    "spam"
+                ]
+            }
+        },
+        {
+            "email_id": "e004",
+            "subject": "Developer Weekly: AI coding tools, Rust 2024 edition, and more",
+            "body": "This week in Developer Weekly: GitHub Copilot adds multi-file context, Rust releases its 2024 edition with improved async support, and a deep dive into zero-downtime deployments. Plus: our curated list of open-source tools worth bookmarking. Unsubscribe at any time.",
+            "sender": "editor@developerweekly.com",
+            "timestamp": "2024-04-08T07:00:00Z",
+            "ground_truth": {
+                "category": "newsletter",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "spam"
+                ]
+            }
+        },
+        {
+            "email_id": "e005",
+            "subject": "Security audit findings — please review before Thursday",
+            "body": "Attached is the preliminary report from our external security audit. The auditors flagged two medium-severity findings: an outdated TLS configuration on the staging load balancer and a missing rate limit on the public search endpoint. No critical findings. Please review and confirm whether you want to address these before the compliance deadline on Friday.",
+            "sender": "security@company.com",
+            "timestamp": "2024-04-08T09:45:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "high",
+                "required_response_keywords": [
+                    "review",
+                    "security",
+                    "compliance"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e006",
+            "subject": "Claim your free trial — AI-powered HR platform",
+            "body": "Hi there! We noticed your company is growing fast. Our AI-powered HR platform helps teams like yours automate onboarding, track performance, and reduce churn. Start your free 30-day trial today — no credit card required. Book a demo with our team this week.",
+            "sender": "growth@hr-ai-platform.co",
+            "timestamp": "2024-04-08T08:00:00Z",
+            "ground_truth": {
+                "category": "spam",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "newsletter"
+                ]
+            }
+        },
+        {
+            "email_id": "e007",
+            "subject": "Re: Q2 roadmap — need your sign-off by EOD",
+            "body": "Following up on the Q2 roadmap discussion from last week. The product team has incorporated all the feedback and the doc is ready for final sign-off. We need your approval by end of day today so engineering can begin sprint planning tomorrow morning. The doc is linked in the shared drive.",
+            "sender": "product.manager@company.com",
+            "timestamp": "2024-04-08T10:30:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "high",
+                "required_response_keywords": [
+                    "approve",
+                    "roadmap",
+                    "sign-off"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e008",
+            "subject": "Customer complaint — data export feature broken for 3 days",
+            "body": "I am writing to escalate a serious issue. Our team relies on the data export feature daily for compliance reporting. It has been broken for three days and every support ticket we have raised has been closed without resolution. This is now affecting our ability to meet a regulatory deadline next Monday. I need this escalated to engineering leadership immediately.",
+            "sender": "ops.director@enterprise-client.com",
+            "timestamp": "2024-04-08T11:00:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "escalate",
+                    "engineering",
+                    "export",
+                    "deadline"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e009",
+            "subject": "Office kitchen renovation — feedback requested",
+            "body": "Hi all, as part of the office refresh project, we are planning to renovate the 3rd floor kitchen. We would love your input on the new layout options. Please fill out the short survey linked below by Friday. All responses are anonymous. Thanks for helping make the office a better place!",
+            "sender": "facilities@company.com",
+            "timestamp": "2024-04-08T09:15:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "newsletter"
+                ]
+            }
+        },
+        {
+            "email_id": "e010",
+            "subject": "Possible phishing attempt targeting employees — read carefully",
+            "body": "Our security team has detected a phishing campaign impersonating our IT helpdesk. Employees are receiving emails asking them to verify credentials via a fake login page. Do NOT click any links from it-helpdesk-verify@company-support.net. Forward any suspicious emails to security@company.com. We are investigating and will update you shortly.",
+            "sender": "security@company.com",
+            "timestamp": "2024-04-08T10:50:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "forward",
+                    "security",
+                    "phishing"
+                ],
+                "near_miss_categories": [
+                    "internal"
+                ]
+            }
+        }
+    ],
+    "conflicts": [
+        {
+            "conflict_id": "c001",
+            "event_a": {
+                "title": "Database Incident War Room",
+                "time": "2024-04-08T11:00:00Z",
+                "attendees": [
+                    "cto@company.com",
+                    "dba-team@ops.company.com",
+                    "you@company.com"
+                ],
+                "vip": true
+            },
+            "event_b": {
+                "title": "Quarterly Business Review Prep with Sales",
+                "time": "2024-04-08T11:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "vp.sales@company.com",
+                    "account.exec@company.com"
+                ],
+                "vip": false
+            },
+            "conflict_reason": "same_time",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_b",
+                "acceptable_resolutions": [
+                    "delegate_a",
+                    "cancel_b"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c002",
+            "event_a": {
+                "title": "Investor Relations Call — Series B Update",
+                "time": "2024-04-08T14:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "lead.investor@vc-firm.com",
+                    "cfo@company.com"
+                ],
+                "vip": true
+            },
+            "event_b": {
+                "title": "Security Audit Debrief with External Auditors",
+                "time": "2024-04-08T14:30:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "auditor@secfirm.com",
+                    "security@company.com"
+                ],
+                "vip": true
+            },
+            "conflict_reason": "back_to_back_travel",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_b",
+                "acceptable_resolutions": [
+                    "delegate_a"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c003",
+            "event_a": {
+                "title": "1:1 Performance Review — Junior Engineer",
+                "time": "2024-04-08T16:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "junior.eng@company.com"
+                ],
+                "vip": false
+            },
+            "event_b": {
+                "title": "Team Retrospective — Sprint 22",
+                "time": "2024-04-08T16:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "team@company.com"
+                ],
+                "vip": false
+            },
+            "conflict_reason": "attendee_overlap",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_a",
+                "acceptable_resolutions": [
+                    "delegate_a",
+                    "reschedule_b"
+                ]
+            }
+        }
+    ],
+    "tasks": [
+        {
+            "task_id": "t001",
+            "title": "Authorize replica promotion and coordinate DBA incident response",
+            "source_email_id": "e001",
+            "urgency": "urgent",
+            "requires_technical": true,
+            "ground_truth": {
+                "correct_assignee": "manager",
+                "acceptable_assignees": [
+                    "external"
+                ],
+                "required_message_keywords": [
+                    "authorize",
+                    "replica",
+                    "DBA",
+                    "incident"
+                ]
+            }
+        },
+        {
+            "task_id": "t002",
+            "title": "Escalate broken data export to engineering and respond to enterprise client",
+            "source_email_id": "e008",
+            "urgency": "urgent",
+            "requires_technical": true,
+            "ground_truth": {
+                "correct_assignee": "manager",
+                "acceptable_assignees": [
+                    "external"
+                ],
+                "required_message_keywords": [
+                    "escalate",
+                    "export",
+                    "engineering",
+                    "deadline"
+                ]
+            }
+        },
+        {
+            "task_id": "t003",
+            "title": "Confirm CloudMonitor Pro subscription renewal or initiate downgrade review",
+            "source_email_id": "e003",
+            "urgency": "medium",
+            "requires_technical": false,
+            "ground_truth": {
+                "correct_assignee": "junior",
+                "acceptable_assignees": [
+                    "self"
+                ],
+                "required_message_keywords": [
+                    "subscription",
+                    "billing",
+                    "confirm"
+                ]
+            }
+        }
+    ]
+}

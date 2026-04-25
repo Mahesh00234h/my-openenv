@@ -1,0 +1,579 @@
+{
+    "task_id": "hard_cos",
+    "emails": [
+        {
+            "email_id": "e001",
+            "subject": "SEV-1: Payment processing service down — all transactions failing",
+            "body": "SEVERITY 1 INCIDENT. The payment processing microservice has been unresponsive since 06:47 UTC. All card transactions are failing with a gateway timeout. Estimated revenue impact: $18,000/minute. The on-call SRE team has isolated the issue to a memory leak introduced in the v2.4.1 deploy 40 minutes ago. They need immediate authorization to roll back to v2.4.0 and reschedule the emergency engineering review currently blocking the war room. Please respond within 5 minutes.",
+            "sender": "sre-oncall@ops.company.com",
+            "timestamp": "2024-05-13T06:52:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "authorize",
+                    "rollback",
+                    "incident"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e002",
+            "subject": "Re: Partnership proposal — follow-up from last week's call",
+            "body": "Hi, following up on our conversation last Tuesday. We are very interested in moving forward with the co-marketing partnership. Our legal team has reviewed the draft MOU and has two minor redlines. Could you connect me with whoever handles partnerships on your end? We would like to close this before the end of the month.",
+            "sender": "partnerships@growth-co.com",
+            "timestamp": "2024-05-13T07:15:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "medium",
+                "required_response_keywords": [
+                    "connect",
+                    "partnership",
+                    "legal"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e003",
+            "subject": "Compliance deadline reminder: SOC 2 evidence due Friday",
+            "body": "This is a reminder that all SOC 2 Type II evidence artifacts must be submitted to the compliance portal by Friday 17:00 UTC. Outstanding items for your team: access review logs (engineering), incident response runbooks (ops), and vendor risk assessments (procurement). Failure to submit on time will delay our audit and could affect our enterprise contract renewals.",
+            "sender": "compliance@company.com",
+            "timestamp": "2024-05-13T08:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "high",
+                "required_response_keywords": [
+                    "submit",
+                    "compliance",
+                    "evidence",
+                    "SOC2"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e004",
+            "subject": "Exclusive invite: SaaS Growth Summit — complimentary pass inside",
+            "body": "You have been personally selected to receive a complimentary VIP pass to the SaaS Growth Summit. Join 500+ founders and executives for two days of keynotes, workshops, and networking. Use code VIPFREE at checkout. Seats are extremely limited — register today before this offer expires.",
+            "sender": "events@saas-growth-summit.io",
+            "timestamp": "2024-05-13T07:00:00Z",
+            "ground_truth": {
+                "category": "spam",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "newsletter"
+                ]
+            }
+        },
+        {
+            "email_id": "e005",
+            "subject": "Engineering hiring update — 3 offers accepted, 1 declined",
+            "body": "Quick update from the recruiting team: of the four offers extended last week, three have been accepted (two senior engineers and one staff engineer). One candidate declined citing compensation. The staff engineer start date is June 3rd — they will need onboarding access provisioned by May 27th. The two senior engineers start June 10th. Please confirm headcount budget approval so we can close the reqs.",
+            "sender": "recruiting@company.com",
+            "timestamp": "2024-05-13T09:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "medium",
+                "required_response_keywords": [
+                    "approve",
+                    "headcount",
+                    "onboarding"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e006",
+            "subject": "Customer data discrepancy report — possible data integrity issue",
+            "body": "Our data team has identified a discrepancy in customer billing records between our CRM and the billing database. Approximately 340 accounts show different subscription tiers across the two systems. This could indicate a sync failure or, in a worst case, a data corruption event. We need engineering to investigate before the next billing cycle runs on May 15th. This may be related to the recent deploy.",
+            "sender": "data-team@company.com",
+            "timestamp": "2024-05-13T09:30:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "investigate",
+                    "billing",
+                    "data",
+                    "engineering"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e007",
+            "subject": "Product Hunt launch — team coordination needed",
+            "body": "We are planning to launch on Product Hunt next Tuesday. To maximize our ranking we need: a coordinated upvote push from the team at 12:01 AM PST, a prepared response template for comments, and someone to monitor and respond throughout the day. Can you assign someone to own the launch day coordination? We have about 5 days to prepare.",
+            "sender": "marketing@company.com",
+            "timestamp": "2024-05-13T10:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "medium",
+                "required_response_keywords": [
+                    "assign",
+                    "launch",
+                    "coordinate"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e008",
+            "subject": "Unsubscribe confirmation — you have been removed",
+            "body": "You have been successfully unsubscribed from MarketingBlast Weekly. You will no longer receive promotional emails from us. If this was a mistake, click here to resubscribe. Thank you for being a subscriber.",
+            "sender": "noreply@marketingblast.com",
+            "timestamp": "2024-05-13T06:00:00Z",
+            "ground_truth": {
+                "category": "newsletter",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "spam"
+                ]
+            }
+        },
+        {
+            "email_id": "e009",
+            "subject": "Legal: NDA required before vendor onboarding call tomorrow",
+            "body": "We have a vendor onboarding call scheduled for tomorrow at 10 AM with DataStream Analytics. Legal requires a signed NDA before any proprietary information is shared on the call. I have attached the standard NDA template. Please sign and return by 9 AM tomorrow, or authorize me to sign on your behalf. If we cannot get this done in time, we will need to reschedule the call.",
+            "sender": "legal@company.com",
+            "timestamp": "2024-05-13T11:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "high",
+                "required_response_keywords": [
+                    "sign",
+                    "NDA",
+                    "authorize"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e010",
+            "subject": "Infrastructure cost spike — AWS bill up 340% this month",
+            "body": "Our AWS cost monitoring alert fired this morning. Month-to-date spend is $47,200 against a $14,000 budget — a 340% overage. The spike correlates with the v2.4.1 deploy yesterday evening. Preliminary analysis suggests the memory leak is causing excessive EC2 auto-scaling. If the service is not rolled back or fixed today, we are looking at a $200,000+ monthly bill. This is directly tied to the payment service incident.",
+            "sender": "finops@company.com",
+            "timestamp": "2024-05-13T07:30:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "rollback",
+                    "cost",
+                    "AWS",
+                    "incident"
+                ],
+                "near_miss_categories": [
+                    "internal"
+                ]
+            }
+        },
+        {
+            "email_id": "e011",
+            "subject": "Team lunch this Friday — RSVP by Wednesday",
+            "body": "Hey everyone! We are organizing a team lunch this Friday at Rosario's (the Italian place two blocks from the office). We have a reservation for 20 at 12:30 PM. Please RSVP by Wednesday so we can confirm the headcount with the restaurant. Dietary restrictions? Let me know and I will make sure they are accommodated.",
+            "sender": "office.manager@company.com",
+            "timestamp": "2024-05-13T09:00:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "newsletter"
+                ]
+            }
+        },
+        {
+            "email_id": "e012",
+            "subject": "Penetration test scheduled — systems will be probed May 20-22",
+            "body": "This is advance notice that our annual penetration test is scheduled for May 20-22. The external security firm will be conducting both network and application layer testing. Engineering teams should be on standby to respond to any findings in real time. Please ensure your incident response runbooks are up to date — this also satisfies the SOC 2 evidence requirement for ops. Coordinate with security@company.com if you have questions.",
+            "sender": "security@company.com",
+            "timestamp": "2024-05-13T10:30:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "high",
+                "required_response_keywords": [
+                    "runbook",
+                    "security",
+                    "SOC2",
+                    "coordinate"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e013",
+            "subject": "Win a Tesla Model 3 — enter our referral contest now!",
+            "body": "Refer 5 friends to SignupGenius Pro and you could win a Tesla Model 3! The contest ends May 31st. Each referral earns you 10 points. Top 3 point earners win. Share your unique referral link below. Terms and conditions apply. Unsubscribe from promotional emails here.",
+            "sender": "promo@signupgenius-pro.net",
+            "timestamp": "2024-05-13T06:30:00Z",
+            "ground_truth": {
+                "category": "spam",
+                "priority": "low",
+                "required_response_keywords": [],
+                "near_miss_categories": [
+                    "newsletter"
+                ]
+            }
+        },
+        {
+            "email_id": "e014",
+            "subject": "Board deck draft — review needed before Thursday board meeting",
+            "body": "The draft board deck for Thursday's meeting is ready for your review. Key sections: Q1 financials (CFO), product roadmap (CPO), and the incident post-mortem summary (you). Given the payment outage this morning, the board will almost certainly ask about it — I have added a placeholder slide but you will need to fill in the timeline and remediation steps. Please review and return edits by Wednesday noon.",
+            "sender": "exec.assistant@company.com",
+            "timestamp": "2024-05-13T11:30:00Z",
+            "ground_truth": {
+                "category": "internal",
+                "priority": "high",
+                "required_response_keywords": [
+                    "review",
+                    "board",
+                    "incident",
+                    "remediation"
+                ],
+                "near_miss_categories": [
+                    "support"
+                ]
+            }
+        },
+        {
+            "email_id": "e015",
+            "subject": "Open source dependency flagged: critical CVE in lodash 4.17.20",
+            "body": "Our automated dependency scanner flagged a critical CVE (CVE-2024-1337) in lodash 4.17.19 used in three of our Node.js services: api-gateway, user-service, and notification-service. The vulnerability allows prototype pollution leading to remote code execution. A patched version (4.17.21) is available. Given the current incident, this should be addressed as part of the v2.4.2 patch. Engineering needs to prioritize this alongside the rollback.",
+            "sender": "security@company.com",
+            "timestamp": "2024-05-13T10:45:00Z",
+            "ground_truth": {
+                "category": "urgent",
+                "priority": "urgent",
+                "required_response_keywords": [
+                    "patch",
+                    "CVE",
+                    "engineering",
+                    "security"
+                ],
+                "near_miss_categories": [
+                    "internal"
+                ]
+            }
+        }
+    ],
+    "conflicts": [
+        {
+            "conflict_id": "c001",
+            "event_a": {
+                "title": "SEV-1 Payment Incident War Room",
+                "time": "2024-05-13T07:00:00Z",
+                "attendees": [
+                    "cto@company.com",
+                    "sre-oncall@ops.company.com",
+                    "you@company.com",
+                    "vp.eng@company.com"
+                ],
+                "vip": true
+            },
+            "event_b": {
+                "title": "Weekly Leadership Sync",
+                "time": "2024-05-13T07:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "coo@company.com",
+                    "cfo@company.com",
+                    "cmo@company.com"
+                ],
+                "vip": false
+            },
+            "conflict_reason": "same_time",
+            "source_email_id": "e001",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_b",
+                "acceptable_resolutions": [
+                    "cancel_b",
+                    "delegate_a"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c002",
+            "event_a": {
+                "title": "AWS FinOps Emergency Review",
+                "time": "2024-05-13T09:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "finops@company.com",
+                    "vp.eng@company.com"
+                ],
+                "vip": false
+            },
+            "event_b": {
+                "title": "Investor Monthly Update Call",
+                "time": "2024-05-13T09:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "lead.investor@vc-firm.com",
+                    "cfo@company.com"
+                ],
+                "vip": true
+            },
+            "conflict_reason": "same_time",
+            "source_email_id": "e010",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_a",
+                "acceptable_resolutions": [
+                    "delegate_a"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c003",
+            "event_a": {
+                "title": "SOC 2 Evidence Submission Review",
+                "time": "2024-05-13T11:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "compliance@company.com",
+                    "security@company.com"
+                ],
+                "vip": false
+            },
+            "event_b": {
+                "title": "Board Deck Review Session",
+                "time": "2024-05-13T11:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "exec.assistant@company.com",
+                    "cfo@company.com"
+                ],
+                "vip": false
+            },
+            "conflict_reason": "attendee_overlap",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_a",
+                "acceptable_resolutions": [
+                    "delegate_a",
+                    "reschedule_b"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c004",
+            "event_a": {
+                "title": "Data Integrity Incident Triage",
+                "time": "2024-05-13T13:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "data-team@company.com",
+                    "vp.eng@company.com"
+                ],
+                "vip": false
+            },
+            "event_b": {
+                "title": "Enterprise Client Executive Briefing",
+                "time": "2024-05-13T13:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "ceo@enterprise-client.com",
+                    "account.exec@company.com"
+                ],
+                "vip": true
+            },
+            "conflict_reason": "same_time",
+            "source_email_id": "e006",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "delegate_a",
+                "acceptable_resolutions": [
+                    "reschedule_a"
+                ]
+            }
+        },
+        {
+            "conflict_id": "c005",
+            "event_a": {
+                "title": "Security CVE Patch Planning — Engineering",
+                "time": "2024-05-13T15:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "security@company.com",
+                    "vp.eng@company.com",
+                    "staff.eng@company.com"
+                ],
+                "vip": false
+            },
+            "event_b": {
+                "title": "Recruiting Debrief — Offer Decisions",
+                "time": "2024-05-13T15:00:00Z",
+                "attendees": [
+                    "you@company.com",
+                    "recruiting@company.com",
+                    "hr.director@company.com"
+                ],
+                "vip": false
+            },
+            "conflict_reason": "attendee_overlap",
+            "source_email_id": "e015",
+            "resolution_options": [
+                "reschedule_a",
+                "reschedule_b",
+                "cancel_a",
+                "cancel_b",
+                "delegate_a"
+            ],
+            "ground_truth": {
+                "correct_resolution": "reschedule_b",
+                "acceptable_resolutions": [
+                    "delegate_a",
+                    "cancel_b"
+                ]
+            }
+        }
+    ],
+    "tasks": [
+        {
+            "task_id": "t001",
+            "title": "Authorize payment service rollback to v2.4.0 and lead incident response",
+            "source_email_id": "e001",
+            "urgency": "urgent",
+            "requires_technical": true,
+            "ground_truth": {
+                "correct_assignee": "manager",
+                "acceptable_assignees": [
+                    "external"
+                ],
+                "required_message_keywords": [
+                    "rollback",
+                    "v2.4.0",
+                    "authorize",
+                    "incident",
+                    "SRE"
+                ]
+            }
+        },
+        {
+            "task_id": "t002",
+            "title": "Investigate billing data discrepancy before May 15th billing cycle",
+            "source_email_id": "e006",
+            "urgency": "urgent",
+            "requires_technical": true,
+            "ground_truth": {
+                "correct_assignee": "manager",
+                "acceptable_assignees": [
+                    "external"
+                ],
+                "required_message_keywords": [
+                    "investigate",
+                    "billing",
+                    "data",
+                    "sync",
+                    "engineering"
+                ]
+            }
+        },
+        {
+            "task_id": "t003",
+            "title": "Patch lodash CVE-2024-1337 across api-gateway, user-service, notification-service",
+            "source_email_id": "e015",
+            "urgency": "urgent",
+            "requires_technical": true,
+            "ground_truth": {
+                "correct_assignee": "external",
+                "acceptable_assignees": [
+                    "manager"
+                ],
+                "required_message_keywords": [
+                    "patch",
+                    "lodash",
+                    "CVE",
+                    "4.17.21",
+                    "security"
+                ]
+            }
+        },
+        {
+            "task_id": "t004",
+            "title": "Compile SOC 2 evidence artifacts and submit to compliance portal by Friday",
+            "source_email_id": "e003",
+            "urgency": "high",
+            "requires_technical": false,
+            "ground_truth": {
+                "correct_assignee": "junior",
+                "acceptable_assignees": [
+                    "self"
+                ],
+                "required_message_keywords": [
+                    "SOC2",
+                    "evidence",
+                    "submit",
+                    "Friday",
+                    "compliance"
+                ]
+            }
+        },
+        {
+            "task_id": "t005",
+            "title": "Prepare board deck incident slide with payment outage timeline and remediation",
+            "source_email_id": "e014",
+            "urgency": "high",
+            "requires_technical": false,
+            "ground_truth": {
+                "correct_assignee": "self",
+                "acceptable_assignees": [
+                    "junior"
+                ],
+                "required_message_keywords": [
+                    "board",
+                    "incident",
+                    "timeline",
+                    "remediation",
+                    "Wednesday"
+                ]
+            }
+        }
+    ]
+}
