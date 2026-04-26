@@ -1,3 +1,17 @@
+---
+title: AI Chief of Staff Environment
+emoji: 🗂️
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+tags:
+  - openenv
+  - personalized-tasks
+  - long-horizon-planning
+pinned: false
+---
+
 # 🗂️ AI Chief of Staff — RL Environment
 
 > Teaching an LLM to manage your Monday morning — emails, calendar conflicts, and task delegation, all in one reinforcement learning environment.
