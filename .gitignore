@@ -37,4 +37,7 @@ Desktop.ini
 
 # Misc
 *.log
+<<<<<<< HEAD
 plots/*.png 
+=======
+>>>>>>> a988d9ba42c8732d695dff7bdf7f73f43268487a
