@@ -1,6 +1,6 @@
 """
 Baseline inference script for the AI Chief of Staff Environment.
-Runs GPT-4o-mini against all 3 task difficulties and saves results.
+Supports OpenAI, Groq, and Google Gemini backends.
 """
 
 import json
@@ -13,25 +13,29 @@ from pathlib import Path
 from typing import List, Optional
 
 import requests
-from openai import OpenAI
 
 # ── Environment variables ────────────────────────────────────────────────────
-API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY") or os.getenv("OPENAI_API_KEY", "")
-API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
-MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
-HF_TOKEN = os.getenv("HF_TOKEN")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+API_KEY        = os.getenv("HF_TOKEN") or os.getenv("API_KEY") or os.getenv("OPENAI_API_KEY", "")
+API_BASE_URL   = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
+MODEL_NAME     = os.getenv("MODEL_NAME", "gemini-2.0-flash")
+HF_TOKEN       = os.getenv("HF_TOKEN")
 LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
-BASE_URL = os.getenv("ENV_BASE_URL", "http://localhost:7860")
+BASE_URL       = os.getenv("ENV_BASE_URL", "http://localhost:7860")
 
-MAX_RETRIES = 3
+# Use Gemini if key is set, otherwise fall back to OpenAI-compatible client
+USE_GEMINI = bool(GEMINI_API_KEY)
+
+MAX_RETRIES   = 3
 BACKOFF_DELAYS = [1, 2, 4]
 
 # Task step counts (emails, conflicts, tasks)
 TASK_COUNTS = {
-    "easy_cos":   {"email": 5, "calendar": 2, "delegation": 2},
+    "easy_cos":   {"email": 5,  "calendar": 2, "delegation": 2},
     "medium_cos": {"email": 10, "calendar": 3, "delegation": 3},
     "hard_cos":   {"email": 15, "calendar": 5, "delegation": 5},
 }
+
 
 # ── System prompt ────────────────────────────────────────────────────────────
 SYSTEM_PROMPT = """You are an AI Chief of Staff operating inside a structured decision environment.
@@ -66,20 +70,29 @@ Always respond with ONLY valid JSON. No markdown, no explanation, no code blocks
 
 
 # ── LLM call ─────────────────────────────────────────────────────────────────
-def call_llm(client: OpenAI, prompt: str) -> str:
+def call_llm(client, prompt: str) -> str:
+    """Call Gemini or OpenAI-compatible LLM with retry. Falls back to rule-based agent."""
     last_exc = None
     for attempt in range(MAX_RETRIES + 1):
         try:
-            response = client.chat.completions.create(
-                model=MODEL_NAME,
-                messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": prompt},
-                ],
-                temperature=0.3,
-                max_tokens=300,
-            )
-            return response.choices[0].message.content.strip()
+            if USE_GEMINI:
+                response = client.generate_content(
+                    SYSTEM_PROMPT + "\n\n" + prompt,
+                    generation_config={"temperature": 0.3, "max_output_tokens": 300},
+                )
+                return response.text.strip()
+            else:
+                from openai import OpenAI as _OpenAI
+                response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    messages=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user",   "content": prompt},
+                    ],
+                    temperature=0.3,
+                    max_tokens=300,
+                )
+                return response.choices[0].message.content.strip()
         except Exception as exc:
             last_exc = exc
             if attempt < MAX_RETRIES:
@@ -167,7 +180,7 @@ def _rule_based_fallback(prompt: str) -> str:
 
 
 # ── Episode runner ────────────────────────────────────────────────────────────
-def run_episode(task_id: str, client: OpenAI) -> dict:
+def run_episode(task_id: str, client) -> dict:
     obs = requests.get(f"{BASE_URL}/reset", params={"task_id": task_id}).json()
     phase_log: dict[str, List[float]] = {"email": [], "calendar": [], "delegation": []}
     step_num = 0
@@ -289,11 +302,18 @@ def save_results(llm_results: dict) -> None:
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    if not API_KEY:
-        print("[ERROR] No API key found. Set OPENAI_API_KEY and try again.", file=sys.stderr)
-        sys.exit(1)
-
-    client = OpenAI(api_key=API_KEY, base_url=API_BASE_URL)
+    if USE_GEMINI:
+        import google.generativeai as genai
+        genai.configure(api_key=GEMINI_API_KEY)
+        client = genai.GenerativeModel(MODEL_NAME)
+        print(f"[INFO] Using Gemini backend: {MODEL_NAME}", flush=True)
+    elif API_KEY:
+        from openai import OpenAI
+        client = OpenAI(api_key=API_KEY, base_url=API_BASE_URL)
+        print(f"[INFO] Using OpenAI-compatible backend: {MODEL_NAME}", flush=True)
+    else:
+        print("[WARN] No API key found — rule-based fallback will be used", flush=True)
+        client = None
     llm_results = {}
 
     for task in ["easy_cos", "medium_cos", "hard_cos"]:
