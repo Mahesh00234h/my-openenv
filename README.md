@@ -1,5 +1,17 @@
 # 🗂️ AI Chief of Staff — RL Environment
 
+> Teaching an LLM to manage your Monday morning — emails, calendar conflicts, and task delegation, all in one reinforcement learning environment.
+
+## Status
+
+- ✅ Environment: Built and tested
+- ✅ Baseline: Random agent scored (email 0.36 / calendar 0.75 / delegation 0.15)
+- ⏳ Inference: Qwen2.5-7B baseline run (in progress)
+- ⏳ Training: GRPO run (next step)
+- ⏳ Deployment: HuggingFace Spaces push (next step)
+
+---
+
 ## Overview
 
 This project is a multi-phase reinforcement learning environment that trains an AI agent to act as an executive Chief of Staff. The agent learns to triage emails, resolve calendar conflicts, and delegate tasks under real-world constraints like urgency, VIP hierarchy, and limited resources. It is built on the [OpenEnv](https://github.com/openenv) framework, which provides a standardised gym-style API for language model training environments.

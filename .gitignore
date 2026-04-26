@@ -1,10 +1,18 @@
-# Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
+.env
+.venv/
+*.egg-info/
+.DS_Store
+token.json
+credentials.json
+results/baseline_llm.json
+
+# Python
+*.py[cod]
 *.pyd
 .Python
-*.egg-info/
 dist/
 build/
 .eggs/
@@ -16,7 +24,6 @@ build/
 .pytest_cache/
 
 # Virtual environments
-.venv/
 venv/
 env/
 
@@ -30,4 +37,3 @@ Desktop.ini
 
 # Misc
 *.log
-.DS_Store
